@@ -104,6 +104,18 @@ body {
   .pop-up-content-wrap {
     padding: 10px;
   }
+
+  .log-type-info {
+    color: #5467FF;
+  }
+
+  .log-type-error {
+    color: #dc3545;
+  }
+
+  .log-type-debug {
+    color: #00B81D;
+  }
   
   @media screen and (min-width:800px){
       .custom-model-main:before {

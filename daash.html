@@ -23,37 +23,58 @@
                 </div>
             </div>
         </div>
-        <div class="bg-overlay"></div>
+        <div class="bg-overlay" id="bg-overlay-id"></div>
     </div>
 
     <script>
-        function listenToCloseModal() {
+        const listenToCloseModal = () => {
             const modalLayerElement = document.getElementById('close-btn-id');
             if (modalLayerElement) {
                 modalLayerElement.addEventListener("click", closeModalHandler);
-                document.addEventListener("keydown", closeModalHandler);
+                //document.addEventListener("keydown", closeModalHandler); //this is pretty annoying
+            }
+            const bgOverlay = document.getElementById('bg-overlay-id');
+            if (bgOverlay) {
+                bgOverlay.addEventListener("click", closeModalHandler);
             }
         }
 
-        function showLogs() {
+        const formatLogType = (text) => {
+            switch (text?.toLowerCase()) {
+                case 'info':
+                    return 'log-type-info';
+                case 'debug':
+                    return 'log-type-error';
+                case 'error':
+                    return 'log-type-debug';
+
+                default:
+                    return 'log-type-info';
+            }
+        }
+
+        const showLogs = () => {
             document.getElementById('modal-main').classList.add('model-open');
             listenToCloseModal();
-            const response = ['INFO: bla bla bla', 'INFO: bla bla bla', 'ERROR: this is error'];
+            const response = ['INFO: bla bla bla', 'INFO: bla bla bla', 'ERROR: this is error', 'DEBUG: debuggg'];
             const moadlContainer = document.getElementById('modal-body');
             if (moadlContainer) {
                 moadlContainer.innerHTML = "";
                 if (response) {
                     response.forEach((log) => {
-                        const logRow = document.createElement("div");
-                        logRow.innerHTML = log;
-                        //logRow.className = '';
-                        moadlContainer.appendChild(logRow);
+                        const logCol = log?.split(':');
+                        if (logCol?.length) {
+                            const logRow = document.createElement("div");
+                            logRow.innerHTML = `<div><span class=${formatLogType(logCol[0])}>${logCol[0]}:</span><span>${logCol[1]}</span></div>`;
+                            //logRow.className = '';
+                            moadlContainer.appendChild(logRow);
+                        }
                     });
                 }
             }
         }
 
-        function closeModalHandler() {
+        const closeModalHandler = () => {
             console.log('modal close');
             document.getElementById('modal-main').classList.remove('model-open');
         }
