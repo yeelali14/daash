@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="playground" />
+    <link rel='stylesheet' href="styles.css" />
+
+    <title>Daash</title>
+</head>
+
+<body>
+    <button onclick="showLogs()">show logs</button>
+    <div class="custom-model-main" id="modal-main">
+        <div class="custom-model-inner">
+            <div class="close-btn" id="close-btn-id">×</div>
+            <div class="custom-model-wrap">
+                <div class="pop-up-content-wrap">
+                    <h3>Logs</h3>
+                    <div id="modal-body">bla</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-overlay"></div>
+    </div>
+
+    <script>
+        function listenToCloseModal() {
+            const modalLayerElement = document.getElementById('close-btn-id');
+            if (modalLayerElement) {
+                modalLayerElement.addEventListener("click", closeModalHandler);
+                document.addEventListener("keydown", closeModalHandler);
+            }
+        }
+
+        function showLogs() {
+            document.getElementById('modal-main').classList.add('model-open');
+            listenToCloseModal();
+            const response = ['INFO: bla bla bla', 'INFO: bla bla bla', 'ERROR: this is error'];
+            const moadlContainer = document.getElementById('modal-body');
+            if (moadlContainer) {
+                moadlContainer.innerHTML = "";
+                if (response) {
+                    response.forEach((log) => {
+                        const logRow = document.createElement("div");
+                        logRow.innerHTML = log;
+                        //logRow.className = '';
+                        moadlContainer.appendChild(logRow);
+                    });
+                }
+            }
+        }
+
+        function closeModalHandler() {
+            console.log('modal close');
+            document.getElementById('modal-main').classList.remove('model-open');
+        }
+    </script>
+</body>
+
+</html>
