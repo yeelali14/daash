@@ -105,6 +105,10 @@ body {
     padding: 10px;
   }
 
+  .log-row {
+    padding: 0.25rem;
+  }
+
   .log-type-info {
     color: #5467FF;
   }

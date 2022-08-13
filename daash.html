@@ -1,84 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="playground" />
-    <link rel='stylesheet' href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
 
     <title>Daash</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <button onclick="showLogs()">show logs</button>
     <div class="custom-model-main" id="modal-main">
-        <div class="custom-model-inner">
-            <div class="close-btn" id="close-btn-id">×</div>
-            <div class="custom-model-wrap">
-                <div class="pop-up-content-wrap">
-                    <h3>Logs</h3>
-                    <div id="modal-body">bla</div>
-                </div>
-            </div>
+      <div class="custom-model-inner">
+        <div class="close-btn" id="close-btn-id">×</div>
+        <div class="custom-model-wrap">
+          <div class="pop-up-content-wrap">
+            <h3>Logs</h3>
+            <div id="modal-body">bla</div>
+          </div>
         </div>
-        <div class="bg-overlay" id="bg-overlay-id"></div>
+      </div>
+      <div class="bg-overlay" id="bg-overlay-id"></div>
     </div>
 
     <script>
-        const listenToCloseModal = () => {
-            const modalLayerElement = document.getElementById('close-btn-id');
-            if (modalLayerElement) {
-                modalLayerElement.addEventListener("click", closeModalHandler);
-                //document.addEventListener("keydown", closeModalHandler); //this is pretty annoying
-            }
-            const bgOverlay = document.getElementById('bg-overlay-id');
-            if (bgOverlay) {
-                bgOverlay.addEventListener("click", closeModalHandler);
-            }
+      const listenToCloseModal = () => {
+        const modalLayerElement = document.getElementById('close-btn-id');
+        if (modalLayerElement) {
+          modalLayerElement.addEventListener('click', closeModalHandler);
+          //document.addEventListener("keydown", closeModalHandler); //this is pretty annoying
         }
-
-        const formatLogType = (text) => {
-            switch (text?.toLowerCase()) {
-                case 'info':
-                    return 'log-type-info';
-                case 'debug':
-                    return 'log-type-error';
-                case 'error':
-                    return 'log-type-debug';
-
-                default:
-                    return 'log-type-info';
-            }
+        const bgOverlay = document.getElementById('bg-overlay-id');
+        if (bgOverlay) {
+          bgOverlay.addEventListener('click', closeModalHandler);
         }
+      };
 
-        const showLogs = () => {
-            document.getElementById('modal-main').classList.add('model-open');
-            listenToCloseModal();
-            const response = ['INFO: bla bla bla', 'INFO: bla bla bla', 'ERROR: this is error', 'DEBUG: debuggg'];
-            const moadlContainer = document.getElementById('modal-body');
-            if (moadlContainer) {
-                moadlContainer.innerHTML = "";
-                if (response) {
-                    response.forEach((log) => {
-                        const logCol = log?.split(':');
-                        if (logCol?.length) {
-                            const logRow = document.createElement("div");
-                            logRow.innerHTML = `<div><span class=${formatLogType(logCol[0])}>${logCol[0]}:</span><span>${logCol[1]}</span></div>`;
-                            //logRow.className = '';
-                            moadlContainer.appendChild(logRow);
-                        }
-                    });
-                }
-            }
-        }
+      const formatLogType = (text) => {
+        switch (text?.toLowerCase()) {
+          case 'info':
+            return 'log-type-info';
+          case 'error':
+            return 'log-type-error';
+          case 'debug':
+            return 'log-type-debug';
 
-        const closeModalHandler = () => {
-            console.log('modal close');
-            document.getElementById('modal-main').classList.remove('model-open');
+          default:
+            return 'log-type-info';
         }
+      };
+
+      const showLogs = () => {
+        document.getElementById('modal-main').classList.add('model-open');
+        listenToCloseModal();
+        const response = [
+          'INFO: You can style the logs',
+          'INFO: however you want',
+          'INFO: for example, I calculate the log type color by its type. see below',
+          'ERROR: this is error',
+          'DEBUG: debuggg',
+          'INFO: that\'s why I needed the response example',
+          'INFO: so i\'ll know how to style it, without a mock',
+          'INFO: but you are so busy, so...',
+          'INFO: WTF',
+          'ERROR: now let\'s see what happens when the text is too long now let\'s see what happens when the text is too long now let\'s see what happens when the text is too long now let\'s see what happens when the text is too long ',
+        ];
+        const moadlContainer = document.getElementById('modal-body');
+        if (moadlContainer) {
+          moadlContainer.innerHTML = '';
+          if (response) {
+            response.forEach((log) => {
+              const logCol = log?.split(':');
+              if (logCol?.length) {
+                const logRow = document.createElement('div');
+                logRow.innerHTML = `<div class="log-row"><span class=${formatLogType(logCol[0])}>${
+                  logCol[0]
+                }:</span><span>${logCol[1]}</span></div>`;
+                //logRow.className = '';
+                moadlContainer.appendChild(logRow);
+              }
+            });
+          }
+        }
+      };
+
+      const closeModalHandler = () => {
+        console.log('modal close');
+        document.getElementById('modal-main').classList.remove('model-open');
+      };
     </script>
-</body>
-
+  </body>
 </html>
